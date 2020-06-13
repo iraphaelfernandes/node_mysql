@@ -9,4 +9,8 @@ app.get('/contato', (req, res) => {
   res.send('Pagina de contato')
 });
 
+app.get('/estoque', (req, res) => {
+  res.send('Gerenciador de Estoque')
+});
+
 app.listen(8080);
