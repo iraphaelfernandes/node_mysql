@@ -16,13 +16,23 @@ connection.connect( (err) => {
 //---------------------------------------------------------------
 
 
-//Cadastrar ítem
-connection.query("INSERT INTO users(name, email) VALUES('Kelly','kelly@kelly.com')",
-function(err, result){
+
+// connection.query("UPDATE users SET name = 'Kelly 2' WHERE id = 2",
+// function(err, result){
+//   if(!err) {
+//     console.log('Usuario cadastrado com sucesso!');
+//   }
+//   else {
+//     console.log('Erro ao cadastrar o usuario!')
+//   }
+// } );
+
+connection.query("DELETE FROM users WHERE id = 2", 
+(err, result) => {
   if(!err) {
-    console.log('Usuario cadastrado com sucesso!');
+    console.log('Usuario deletado com sucesso!')
   }
   else {
-    console.log('Erro ao cadastrar o usuario!')
+    console.log('Erro ao deletar usuario!')
   }
-} );
+});
