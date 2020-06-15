@@ -9,37 +9,20 @@ const connection = mysql.createConnection({
   password : 'raphaelDB13$',
   database : 'db_learner'
 });
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
-  console.log('connected as id ' + connection.threadId);
+
+connection.connect( (err) => {
+  if (err) console.err('Erro ao realizar conexão com o DB: ' + err.stack); return;
 });
-connection.query('SELECT * FROM users', (err, rows, fields) =>{
+//---------------------------------------------------------------
+
+
+//Cadastrar ítem
+connection.query("INSERT INTO users(name, email) VALUES('Kelly','kelly@kelly.com')",
+function(err, result){
   if(!err) {
-    console.log('Resultado: ', rows)
+    console.log('Usuario cadastrado com sucesso!');
   }
-  else{
-    console.log('Erro ao realizar a consulta');
+  else {
+    console.log('Erro ao cadastrar o usuario!')
   }
-});
-
-//-------------------
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/src/index.html');
-});
-app.get('/sobre-empresa', (req, res) => {
-  res.sendFile(__dirname + '/src/sobre-empresa.html')
-});
-app.get('/blog', (req, res) => {
-  res.send('Gerenciador de Estoque')
-});
-
-app.get('/contato', (req, res) => {
-  res.send('Pagina de contato')
-});
-
-
-
-app.listen(8080);
+} );
