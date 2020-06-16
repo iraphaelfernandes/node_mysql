@@ -1,33 +1,17 @@
-const Sequelize = require('sequelize');
+const express = require('express');
+const app = express();
+const handlebars = require('express-handlebars');
 
-const sequelize = new Sequelize('db_learner', 'raphael', 'raphaelDB13$', {
-  host: 'localhost',
-  dialect: 'mysql'
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+//Rotas
+app.get('/pagamento', (req, res) => {
+  res.render('pagamento')
 });
 
-sequelize.authenticate().then(() =>{
-  console.log('Conexao realizada com sucesso')
-}).catch((err) =>{
-  console.log('Erro ao realizar a conexao como o DB: ' + err)
+app.get('/add-pagamento', (req, res) => {
+  res.render('add-pagamento')
 });
 
-const Pagamento = sequelize.define('pagamentos', {
-  // Model attributes are defined here
-  nome: {
-    type: Sequelize.STRING
-  },
-  valor: {
-    type: Sequelize.DOUBLE
-    // allowNull defaults to true
-  }
-  // Other model options go here
-});
-
-
-// Criar tabela
-// User.sync({force: true});
-
-Pagamento.create({
-  nome: 'Energia',
-  valor: 220
-});
+app.listen(8080);
