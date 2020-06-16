@@ -1,38 +1,33 @@
-const express = require('express');
-const app = express();
+const Sequelize = require('sequelize');
 
-//Conexão com DB MySQL
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'raphael',
-  password : 'raphaelDB13$',
-  database : 'db_learner'
+const sequelize = new Sequelize('db_learner', 'raphael', 'raphaelDB13$', {
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
-connection.connect( (err) => {
-  if (err) console.err('Erro ao realizar conexão com o DB: ' + err.stack); return;
+sequelize.authenticate().then(() =>{
+  console.log('Conexao realizada com sucesso')
+}).catch((err) =>{
+  console.log('Erro ao realizar a conexao como o DB: ' + err)
 });
-//---------------------------------------------------------------
 
-
-
-// connection.query("UPDATE users SET name = 'Kelly 2' WHERE id = 2",
-// function(err, result){
-//   if(!err) {
-//     console.log('Usuario cadastrado com sucesso!');
-//   }
-//   else {
-//     console.log('Erro ao cadastrar o usuario!')
-//   }
-// } );
-
-connection.query("DELETE FROM users WHERE id = 2", 
-(err, result) => {
-  if(!err) {
-    console.log('Usuario deletado com sucesso!')
+const Pagamento = sequelize.define('pagamentos', {
+  // Model attributes are defined here
+  nome: {
+    type: Sequelize.STRING
+  },
+  valor: {
+    type: Sequelize.DOUBLE
+    // allowNull defaults to true
   }
-  else {
-    console.log('Erro ao deletar usuario!')
-  }
+  // Other model options go here
+});
+
+
+// Criar tabela
+// User.sync({force: true});
+
+Pagamento.create({
+  nome: 'Energia',
+  valor: 220
 });
